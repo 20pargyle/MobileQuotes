@@ -1,0 +1,25 @@
+Start with mobile HTML
+Then mobile CSS
+
+Initial page (mobile):	data-searched = false
+	- Title (big quote marks? in the corners....?)
+	- Big almost-screen-width search bar on main page (desktop)
+	- Error message "comes out" of the bottom of the search bar
+	- Submit button is 1/3 search bar size, if not smaller
+	- Random quote
+
+Search page (mobile):	data-searched = true
+	the majority of the screen is now well-spaced flex items that contain each quote
+		inside: the quote, author, and whatever else.
+
+
+Pins:
+	If a quote is tapped or clicked, the quote is pinned, permenantly, to the top of the list.
+	It will stay pinned even if another search is performed.
+	On the end of each quote flex-item, have a space for a pin icon that shows up on hover.
+	When pinned, the icon (now filled) always shows.
+	implementation:
+		Add class "pinned" to the flex-item when pinned.
+		When a quote is pinned, place its object in an array (and add to the screen).
+		When the quote is clicked while pinned, the object is removed from the array (and the screen).
+
