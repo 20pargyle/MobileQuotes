@@ -12,6 +12,8 @@ Initial page (mobile):	data-searched = false
 Search page (mobile):	data-searched = true
 	the majority of the screen is now well-spaced flex items that contain each quote
 		inside: the quote, author, and whatever else.
+	the properties of the quotes (and author-names) are similar to the initial-quote's.
+		font, spacing, proportional size, etc.
 
 
 Pins:

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
     <script src="quotes.js" defer></script>
+    <link rel="stylesheet" href="quotes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
   </head>
   <body>
-    <main data-searched="false">
-      <h1>Quote Website</h1>
+    <main id="main-container" data-search="false">
+      <h1>Quoracle.com</h1>
       <div>
         <span class="material-icons">search<input type="text" name="query" id="search-bar" /></span>
       </div>
       <div id="error-display"></div>
-      <h4 id="initial-quote"></h4>
-      <p id="initial-author"></p>
       <ul id="quote-list">
-
+        <li id="initial-quote">
+          <h4 class="quote"></h4>
+          <p class="author"></p>
+        </li>
       </ul>
     </main>
 

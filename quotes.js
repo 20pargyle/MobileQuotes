@@ -1,34 +1,65 @@
+const mainEl = document.getElementById("main-container");
 const initialQuote = document.getElementById("initial-quote");
-const initialAuthor = document.getElementById("initial-author");
 const authorSearch = document.getElementById("search-bar");
 const errorDiv = document.getElementById("error-display");
+const quoteSearchResults = document.getElementById("quote-list");
 
-async function getRandomQuote(elQuote, elAuthor) {
+
+async function getRandomQuote(listEl) {
     const result = await fetch("https://usu-quotes-mimic.vercel.app/api/random");
     const quoteResult = await result;
     const quoteObj = await quoteResult.json();
-    elQuote.innerText = quoteObj["content"];
-    elAuthor.innerText = `- ${quoteObj["author"]}`;
+    listEl.children[0].innerText = quoteObj["content"];
+    listEl.children[1].innerText = `- ${quoteObj["author"]}`;
 }
 
 async function search(userQuery) {
-    const result1 = await fetch(`https:usu-quotes-mimic.vercel.app/api/search?query=${userQuery}`);
-    const result2 = await result1;
-    const quoteList = await result1.json();
+    const result = await fetch(`https:usu-quotes-mimic.vercel.app/api/search?query=${userQuery}`);
+    const quoteList = await result.json();
     return quoteList;
 }
 
-getRandomQuote(initialQuote, initialAuthor);
+getRandomQuote(initialQuote);
 
-authorSearch.addEventListener("keydown", function(e) {
+authorSearch.addEventListener("keydown", async (e) => {
     if (e.key === "Enter"){
+        mainEl.dataset.search = true;
+
         if (authorSearch.value == ""){
             errorDiv.innerText = "Empty string!";
         }
-        // add an else-if for any other conditions here
+        // add an else-if for any other undesired actions here
         else {
-            const quoteList = search(authorSearch.value);
-            console.log(quoteList);
+            const searchObj = await search(authorSearch.value);
+            const quoteList = searchObj["results"];
+            quoteSearchResults.innerHTML = "";
+            displayList(quoteList);
         }
     }
 });
+
+function displayList(quoteList){
+    quoteList.forEach(quoteObj => {
+        const parentItem = document.createElement("li");
+        const quoteEl = document.createElement("h4");
+        const authorEl = document.createElement("p");
+
+        getQuoteText(quoteObj, quoteEl, authorEl);
+
+        quoteEl.classList.add("quote");
+        authorEl.classList.add("author");
+
+        parentItem.appendChild(quoteEl);
+        parentItem.appendChild(authorEl);
+        quoteSearchResults.appendChild(parentItem);
+    });
+}
+
+function getQuoteText(quoteObj, quoteTextEl, quoteAuthorEl) {
+    quoteTextEl.textContent = quoteObj["content"];
+        if (quoteObj["author"] != ""){
+            quoteAuthorEl.textContent = `- ${quoteObj["author"]}`;
+        } else { 
+            quoteAuthorEl.textContent = "- Unknown" 
+        }
+}
