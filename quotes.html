@@ -7,14 +7,20 @@
   </head>
   <body>
     <main id="main-container" data-search="false">
-      <h1>Quoracle.com</h1>
+      <h1>Quote Search</h1>
       <div>
-        <span class="material-icons">search<input type="text" name="query" id="search-bar" /></span>
+        <span class="material-icons" id="search-bar">search<input type="text" name="query" id="search-input"/></span>
+        <div id="error-display" aria-live="polite"></div>
       </div>
-      <div id="error-display"></div>
-      <ul id="quote-list">
+      <section id="pinned-quote-container">
+        <h3>Pinned quotes:</h3>
+        <ul id="pinned-quote-list">
+        </ul>
+      </section>
+      <h3></h3>
+      <ul id="search-quote-list">
         <li id="initial-quote">
-          <h4 class="quote"></h4>
+          <p class="quote"></p>
           <p class="author"></p>
         </li>
       </ul>

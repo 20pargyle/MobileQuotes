@@ -1,16 +1,17 @@
 const mainEl = document.getElementById("main-container");
 const initialQuote = document.getElementById("initial-quote");
-const authorSearch = document.getElementById("search-bar");
+const authorSearch = document.getElementById("search-input");
 const errorDiv = document.getElementById("error-display");
-const quoteSearchResults = document.getElementById("quote-list");
-
+const pinnedQuoteDiv = document.getElementById("pinned-quote-container");
+const searchQuoteList = document.getElementById("search-quote-list");
+const pinnedQuoteList = document.getElementById("pinned-quote-list");
+const quoteEls = document.getElementsByTagName("li");
 
 async function getRandomQuote(listEl) {
     const result = await fetch("https://usu-quotes-mimic.vercel.app/api/random");
     const quoteResult = await result;
     const quoteObj = await quoteResult.json();
-    listEl.children[0].innerText = quoteObj["content"];
-    listEl.children[1].innerText = `- ${quoteObj["author"]}`;
+    getQuoteText(quoteObj, listEl.children[0], listEl.children[1]);
 }
 
 async function search(userQuery) {
@@ -20,19 +21,20 @@ async function search(userQuery) {
 }
 
 getRandomQuote(initialQuote);
+initialQuote.addEventListener("click", function() {togglePin(initialQuote)});
 
 authorSearch.addEventListener("keydown", async (e) => {
     if (e.key === "Enter"){
         mainEl.dataset.search = true;
 
         if (authorSearch.value == ""){
-            errorDiv.innerText = "Empty string!";
+            throwError("Error - search field is empty");
         }
-        // add an else-if for any other undesired actions here
+        // add an else-if for any other undesired actions
         else {
             const searchObj = await search(authorSearch.value);
             const quoteList = searchObj["results"];
-            quoteSearchResults.innerHTML = "";
+            searchQuoteList.innerHTML = "";
             displayList(quoteList);
         }
     }
@@ -41,7 +43,7 @@ authorSearch.addEventListener("keydown", async (e) => {
 function displayList(quoteList){
     quoteList.forEach(quoteObj => {
         const parentItem = document.createElement("li");
-        const quoteEl = document.createElement("h4");
+        const quoteEl = document.createElement("p");
         const authorEl = document.createElement("p");
 
         getQuoteText(quoteObj, quoteEl, authorEl);
@@ -51,15 +53,43 @@ function displayList(quoteList){
 
         parentItem.appendChild(quoteEl);
         parentItem.appendChild(authorEl);
-        quoteSearchResults.appendChild(parentItem);
+        parentItem.addEventListener("click", function() {togglePin(parentItem)});
+        searchQuoteList.appendChild(parentItem);
     });
 }
 
 function getQuoteText(quoteObj, quoteTextEl, quoteAuthorEl) {
-    quoteTextEl.textContent = quoteObj["content"];
+    quoteTextEl.innerText = quoteObj["content"];
         if (quoteObj["author"] != ""){
-            quoteAuthorEl.textContent = `- ${quoteObj["author"]}`;
+            quoteAuthorEl.innerText = `- ${quoteObj["author"]}`;
         } else { 
-            quoteAuthorEl.textContent = "- Unknown" 
+            quoteAuthorEl.innerText = "- Unknown" ;
         }
+}
+
+function togglePin(element){
+    if (element.className.includes("pinned")){
+        element.classList.remove("pinned");
+        pinnedQuoteList.removeChild(element);
+        searchQuoteList.insertBefore(element, searchQuoteList.firstElementChild); 
+
+    } else {
+        element.classList.add("pinned");
+        searchQuoteList.removeChild(element);
+        pinnedQuoteList.insertBefore(element, pinnedQuoteList.firstElementChild);
+    }
+    if (pinnedQuoteList.childElementCount > 0) {
+		pinnedQuoteDiv.style.display = "flex";
+    }
+	else {
+		pinnedQuoteDiv.style.display = "none";
+    }
+}
+
+function throwError(message){
+    errorDiv.innerText = message;
+    errorDiv.style.display = "block";
+    setTimeout(() => {
+        errorDiv.style.display = "none";
+    }, 3000);
 }
