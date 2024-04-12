@@ -4,26 +4,30 @@
     <script src="quotes.js" defer></script>
     <link rel="stylesheet" href="quotes.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
+  <header id="header" data-search="false">
+    <h1 id="title">Quote Search</h1>
+    <div id="search">
+      <span class="material-icons" id="search-bar">search<input type="text" name="query" id="search-input" aria-describedby="title"/></span>
+    </div>
+    <div id="error-display" aria-live="polite"></div>
+  </header>
   <body>
-    <main id="main-container" data-search="false">
-      <h1>Quote Search</h1>
-      <div>
-        <span class="material-icons" id="search-bar">search<input type="text" name="query" id="search-input"/></span>
-        <div id="error-display" aria-live="polite"></div>
-      </div>
+    <main id="main-container">
       <section id="pinned-quote-container">
         <h3>Pinned quotes:</h3>
         <ul id="pinned-quote-list">
         </ul>
       </section>
-      <h3></h3>
-      <ul id="search-quote-list">
-        <li id="initial-quote">
-          <p class="quote"></p>
-          <p class="author"></p>
-        </li>
-      </ul>
+      <section id="search-quote-container">
+        <ul id="search-quote-list">
+          <li id="initial-quote">
+            <p class="quote"></p>
+            <p class="author"></p>
+          </li>
+        </ul>
+      </section>
     </main>
 
   </body>

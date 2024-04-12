@@ -30,7 +30,7 @@ authorSearch.addEventListener("keydown", async (e) => {
         if (authorSearch.value == ""){
             throwError("Error - search field is empty");
         }
-        // add an else-if for any other undesired actions
+        // add an else-if: if there are any symbols ^^
         else {
             const searchObj = await search(authorSearch.value);
             const quoteList = searchObj["results"];
@@ -41,21 +41,27 @@ authorSearch.addEventListener("keydown", async (e) => {
 });
 
 function displayList(quoteList){
-    quoteList.forEach(quoteObj => {
-        const parentItem = document.createElement("li");
-        const quoteEl = document.createElement("p");
-        const authorEl = document.createElement("p");
+    if (quoteList.length == 0) {
+        throwError("No quotes found for that search. \nPlease try again with a different search query.");
 
-        getQuoteText(quoteObj, quoteEl, authorEl);
+    }
+    else {
+        quoteList.forEach(quoteObj => {
+            const parentItem = document.createElement("li");
+            const quoteEl = document.createElement("p");
+            const authorEl = document.createElement("p");
 
-        quoteEl.classList.add("quote");
-        authorEl.classList.add("author");
+            getQuoteText(quoteObj, quoteEl, authorEl);
 
-        parentItem.appendChild(quoteEl);
-        parentItem.appendChild(authorEl);
-        parentItem.addEventListener("click", function() {togglePin(parentItem)});
-        searchQuoteList.appendChild(parentItem);
-    });
+            quoteEl.classList.add("quote");
+            authorEl.classList.add("author");
+
+            parentItem.appendChild(quoteEl);
+            parentItem.appendChild(authorEl);
+            parentItem.addEventListener("click", function() {togglePin(parentItem)});
+            searchQuoteList.appendChild(parentItem);
+        });
+    }
 }
 
 function getQuoteText(quoteObj, quoteTextEl, quoteAuthorEl) {
