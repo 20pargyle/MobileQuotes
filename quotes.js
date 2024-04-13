@@ -16,7 +16,7 @@ async function getRandomQuote(listEl) {
 }
 
 async function search(userQuery) {
-    const result = await fetch(`https:usu-quotes-mimic.vercel.app/api/search?query=${userQuery}`);
+    const result = await fetch(`https://usu-quotes-mimic.vercel.app/api/search?query=${userQuery}`);
     const quoteList = await result.json();
     return quoteList;
 }
@@ -26,44 +26,43 @@ initialQuote.addEventListener("click", function() {togglePin(initialQuote)});
 
 authorSearch.addEventListener("keydown", async (e) => {
     if (e.key === "Enter"){
-        bodyEl.dataset.search = true;
-        headerEl.dataset.search = true;
-        setTimeout(() => {}, 1000);
-
         if (authorSearch.value == ""){
             throwError("Error - search field is empty");
-        }
-        // add an else-if: if there are any symbols ^^
-        else {
+        } else {            
             const searchObj = await search(authorSearch.value);
             const quoteList = searchObj["results"];
-            searchQuoteList.innerHTML = "";
-            displayList(quoteList);
+
+            if (quoteList.length == 0) {
+                throwError("No quotes found for that search. \nPlease try again with a different search query.");
+            }
+            else {
+                bodyEl.dataset.search = true;
+                headerEl.dataset.search = true; 
+                searchQuoteList.innerHTML = "";   
+                setTimeout(() => {}, 1000);
+                displayList(quoteList);
+            }
         }
     }
 });
 
 function displayList(quoteList){
-    if (quoteList.length == 0) {
-        throwError("No quotes found for that search. \nPlease try again with a different search query.");
-    }
-    else {
-        quoteList.forEach(quoteObj => {
-            const parentItem = document.createElement("li");
-            const quoteEl = document.createElement("p");
-            const authorEl = document.createElement("p");
+    quoteList.forEach(quoteObj => {
+        const parentItem = document.createElement("li");
+        const quoteEl = document.createElement("p");
+        const authorEl = document.createElement("p");
 
-            getQuoteText(quoteObj, quoteEl, authorEl);
+        getQuoteText(quoteObj, quoteEl, authorEl);
 
-            quoteEl.classList.add("quote");
-            authorEl.classList.add("author");
+        parentItem.setAttribute("tabindex","0");
+        quoteEl.classList.add("quote");
+        authorEl.classList.add("author");
 
-            parentItem.appendChild(quoteEl);
-            parentItem.appendChild(authorEl);
-            parentItem.addEventListener("click", function() {togglePin(parentItem)});
-            searchQuoteList.appendChild(parentItem);
-        });
-    }
+        parentItem.appendChild(quoteEl);
+        parentItem.appendChild(authorEl);
+        parentItem.addEventListener("click", function() {togglePin(parentItem)});
+        searchQuoteList.appendChild(parentItem);
+    });
 }
 
 function getQuoteText(quoteObj, quoteTextEl, quoteAuthorEl) {
@@ -95,9 +94,9 @@ function togglePin(element){
 }
 
 function throwError(message){
-    errorDiv.innerText = message;
+    errorDiv.textContent = message;
     errorDiv.style.display = "block";
     setTimeout(() => {
         errorDiv.style.display = "none";
-    }, 3000);
+    }, 4000);
 }
