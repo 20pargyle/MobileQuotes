@@ -1,4 +1,5 @@
-const mainEl = document.getElementById("main-container");
+const bodyEl = document.getElementById("body");
+const headerEl = document.getElementById("header");
 const initialQuote = document.getElementById("initial-quote");
 const authorSearch = document.getElementById("search-input");
 const errorDiv = document.getElementById("error-display");
@@ -25,7 +26,9 @@ initialQuote.addEventListener("click", function() {togglePin(initialQuote)});
 
 authorSearch.addEventListener("keydown", async (e) => {
     if (e.key === "Enter"){
-        mainEl.dataset.search = true;
+        bodyEl.dataset.search = true;
+        headerEl.dataset.search = true;
+        setTimeout(() => {}, 1000);
 
         if (authorSearch.value == ""){
             throwError("Error - search field is empty");
@@ -43,7 +46,6 @@ authorSearch.addEventListener("keydown", async (e) => {
 function displayList(quoteList){
     if (quoteList.length == 0) {
         throwError("No quotes found for that search. \nPlease try again with a different search query.");
-
     }
     else {
         quoteList.forEach(quoteObj => {
