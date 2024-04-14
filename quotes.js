@@ -39,7 +39,6 @@ authorSearch.addEventListener("keydown", async (e) => {
                 bodyEl.dataset.search = true;
                 headerEl.dataset.search = true; 
                 searchQuoteList.innerHTML = "";   
-                setTimeout(() => {}, 1000);
                 displayList(quoteList);
             }
         }

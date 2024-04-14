@@ -6,27 +6,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <header id="header" data-search="false">
-    <h1 id="title" tabindex="0">Quote Search (by author)</h1>
-    <div id="search">
-      <span class="material-icons" id="search-bar">search<input type="text" name="query" id="search-input" aria-labelledby="title" tabindex="0"/></span>
-    </div>
-    <div id="error-display" aria-live="assertive" tabindex="-1"></div>
-  </header>
-  <body id="body" data-search="false">
-    <section id="pinned-quote-container">
-      <h3 id="pinned-list-title" tabindex="0">Pinned quotes:</h3>
-      <ul id="pinned-quote-list" aria-labelledby="pinned-list-title">
-      </ul>
-    </section>
-    <section id="search-quote-container">
-      <ul id="search-quote-list" aria-label="Search results:">
-        <li id="initial-quote">
-          <p class="quote"></p>
-          <p class="author"></p>
-        </li>
-      </ul>
-    </section>
+  <body>
+    <header id="header" data-search="false">
+      <h1 id="title" tabindex="0">Quote Search (by author)</h1>
+      <div id="search">
+        <span class="material-icons" id="search-bar">search<input type="text" name="query" id="search-input" aria-labelledby="title" tabindex="0"/></span>
+      </div>
+      <div id="error-display" aria-live="assertive" tabindex="-1"></div>
+    </header>
+    <main id="body" data-search="false">
+      <section id="pinned-quote-container">
+        <h3 id="pinned-list-title" tabindex="0">Pinned quotes:</h3>
+        <ul id="pinned-quote-list" aria-labelledby="pinned-list-title">
+        </ul>
+      </section>
+      <section id="search-quote-container">
+        <ul id="search-quote-list" aria-label="Search results:">
+          <li id="initial-quote">
+            <p class="quote"></p>
+            <p class="author"></p>
+          </li>
+        </ul>
+      </section>
+    </main>
   </body>
 
 </html>

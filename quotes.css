@@ -12,6 +12,11 @@ html {
     height: 100vh;
     width: 100vw;
     margin: 0px;
+    background-color: var(--primary);
+}
+body{
+    margin: 0px;
+    overflow: hidden;
 }
 header {
     z-index: 1;
@@ -25,7 +30,7 @@ header {
     top: 25vh;
     left: 0;
     right: 0;
-    transition: all 0.5s ease-in;
+    transition: top 0.5s ease-in;
 }
 header[data-search="true"]{
     position: fixed;
@@ -33,34 +38,33 @@ header[data-search="true"]{
     left: 0;
     right: 0;
 }
-body {
-    background-color: var(--primary);
+main {
     position: relative;
     top: 50vh;
-    height: 100vh;
+    height: 50vh;
     width: 100vw;
     margin: 0px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: all 0.5s ease-in;
+    transition: top 0.5s ease-in;
 }
-body[data-search="true"] {
-    top: 16vh;
+main[data-search="true"] {
+    top: 18vh;
+    height: 75vh;
     overflow: auto;
 }
-body[data-search="false"] ul {
+main[data-search="false"] ul {
     font-size: 1.3em;
     text-align: center;
+    align-items: center;
 }
-body[data-search="false"] li .author{
+main[data-search="false"] li .author{
     margin: 0px;
 }
 section {
     width: 90%;
     flex-direction: column;
-    align-items: center;
 }
 #title {
     font-size: 3.5vh;
@@ -118,4 +122,28 @@ li {
 .author {
     margin: 0px 0px 0px 28px;
     font-size: 0.7em;
+}
+
+@media screen and (min-width: 750px) {
+    * {
+        font-size: 3.5vh;
+    }
+    header #title {
+        font-size: 5.5vh;
+    }
+    header[data-search="true"] {
+        
+    }
+    main {
+
+    }
+    main[data-search="true"] {
+        top: 25vh;
+    }
+    main[data-search="false"] ul {
+
+    }
+    section {
+        width: 65vw;
+    }
 }
