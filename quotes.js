@@ -27,7 +27,7 @@ initialQuote.addEventListener("click", function() {togglePin(initialQuote)});
 authorSearch.addEventListener("keydown", async (e) => {
     if (e.key === "Enter"){
         if (authorSearch.value == ""){
-            throwError("Error - search field is empty");
+            throwError("Search field is empty; Please try again.");
         } else {            
             const searchObj = await search(authorSearch.value);
             const quoteList = searchObj["results"];
@@ -99,3 +99,8 @@ function throwError(message){
         errorDiv.style.display = "none";
     }, 4000);
 }
+
+const a = {myName: "Hello"};
+const b = a;
+b.myName = "Goodbye";
+console.log(a.myName);
